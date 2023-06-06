@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-sm bg-body-tertiary d-none d-lg-block " id="navPrincipal">
     <div class="container-fluid">
         <div class="d-flex align-items-center ">
-            <a class="navbar-brand" href="{{route('inicio')}}">
-                <img src="{{ Storage::url('Logo.svg') }}" alt="Logo El Rincon de las Letras - Ir a la página principal"
+            <a class="navbar-brand" href="<?php echo e(route('inicio')); ?>">
+                <img src="<?php echo e(Storage::url('Logo.svg')); ?>" alt="Logo El Rincon de las Letras - Ir a la página principal"
                     id='logo' width="50" height="50" class="me-4">
             </a>
         </div>
@@ -15,16 +15,16 @@
                     </a>
                 </li>
                 <li class="nav-item px-2">
-                    <a class="nav-link" href="{{route('contacto.show')}}">Contactanos</a>
+                    <a class="nav-link" href="<?php echo e(route('contacto.show')); ?>">Contactanos</a>
                 </li>
                 <li class="nav-item px-2">
-                    <a class="nav-link" href="{{route('sobrenost')}}">Sobre nosotros</a>
+                    <a class="nav-link" href="<?php echo e(route('sobrenost')); ?>">Sobre nosotros</a>
                 </li>
             </ul>
             <div class="d-flex mx-auto justify-md-content-center">
                 <div class="input-group">
-                    <form action="{{route('search')}}" method="GET" id="searchForm">
-                        @csrf
+                    <form action="<?php echo e(route('search')); ?>" method="GET" id="searchForm">
+                        <?php echo csrf_field(); ?>
                         <label for="inputSearch" class="visually-hidden" style="color:#D9D9D9">Buscar un libro</label>
                         <input class="form-control rounded-pill" name="titulo" id="inputSearch" type="search"
                             placeholder="Buscar" aria-label="Buscar un libro">
@@ -33,13 +33,13 @@
             </div>
             <ul class="navbar-nav ms-auto me-2 align-items-center">
                 <li class="nav-item me-4">
-                    <a href="{{ route('wishlist') }}" class="text-decoration-none" id="heart">
+                    <a href="<?php echo e(route('wishlist')); ?>" class="text-decoration-none" id="heart">
                         <i class="fa-solid fa-heart wishlist"></i>
                         <span class="visually-hidden" style="color:#D9D9D9">Wishlist</span>
                     </a>
                 </li>
 
-                @if(url()->current() != url('/carrito'))
+                <?php if(url()->current() != url('/carrito')): ?>
                 <li class="nav-item me-4">
                     <!-- Contenedor del icono y el badge -->
 
@@ -50,38 +50,39 @@
                         </i>
 
                         <!-- Offcanvas con productos en el carrito -->
-                        @if($contenido > 0)
+                        <?php if($contenido > 0): ?>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{$contenido}}
+                            <?php echo e($contenido); ?>
+
                             <span class="visually-hidden">Productos en el carrito</span>
                         </span>
-                        @endif
+                        <?php endif; ?>
                     </span>
 
                 </li>
-                @endif
+                <?php endif; ?>
 
                 <li class="nav-item">
                     <div class="dropdown w-20">
 
-                        @if (Route::has('login'))
+                        <?php if(Route::has('login')): ?>
 
-                        @auth
-                        <img src="{{ Auth::user()->profile_photo_url ?: Storage::url('user.png')}}"
+                        <?php if(auth()->guard()->check()): ?>
+                        <img src="<?php echo e(Auth::user()->profile_photo_url ?: Storage::url('user.png')); ?>"
                             class="rounded-circle object-cover dropdown-toggle" href="#" role="button"
                             id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" width="35" height="35"
                             alt="Imagen de perfil del usuario">
 
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end position-absolute"
                             aria-labelledby="dropdownMenuLink" style="width: 10vw;">
-                            <li><a href="{{ route('profile.show')}}"
+                            <li><a href="<?php echo e(route('profile.show')); ?>"
                                     class="dropdown-item d-flex justify-content-between align-items-center">Mis Datos<i
                                         class="fa-regular fa-address-card"></i></i></a></li>
-                            <li><a href="{{ route('pedidos')}}"
+                            <li><a href="<?php echo e(route('pedidos')); ?>"
                                     class="dropdown-item d-flex justify-content-between align-items-center">Mis
                                     Pedidos<i class="fa-solid fa-box-open"></i></a></li>
                             <li>
-                            <li><a href="{{ route('opiniones')}}"
+                            <li><a href="<?php echo e(route('opiniones')); ?>"
                                     class="dropdown-item d-flex justify-content-between align-items-center">Mis Reseñas
                                     <i class="fa-regular fa-star"></i></a></li>
                             <li>
@@ -89,35 +90,35 @@
                             </li>
                             <li>
                                 <a class="dropdown-item d-flex justify-content-between align-items-center"
-                                    href="{{ route('logout') }}"
+                                    href="<?php echo e(route('logout')); ?>"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar
                                     Sesión <i class="fa-solid fa-right-from-bracket"></i></a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST"
                                     style="display: none;">
-                                    @csrf
+                                    <?php echo csrf_field(); ?>
                                 </form>
                             </li>
 
                         </ul>
 
-                        @else
-                        <img src="{{ Storage::url('user.png') }}" class="rounded-circle object-cover dropdown-toggle"
+                        <?php else: ?>
+                        <img src="<?php echo e(Storage::url('user.png')); ?>" class="rounded-circle object-cover dropdown-toggle"
                             href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
                             width="35" height="35" alt="Imagen de perfil">
 
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end "
                             aria-labelledby="dropdownMenuLink" style="width: 10vw;">
-                            <li><a href="{{ route('login') }}"
+                            <li><a href="<?php echo e(route('login')); ?>"
                                     class="dropdown-item d-flex justify-content-between align-items-center"
                                     href="#">Inicie Sesión<i class="fa-solid fa-right-to-bracket"></i></a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item d-flex justify-content-between align-items-center"
-                                    href="{{ route('register')}}">Registrarse<i class="fa-solid fa-pencil"></i></a></li>
+                                    href="<?php echo e(route('register')); ?>">Registrarse<i class="fa-solid fa-pencil"></i></a></li>
                         </ul>
-                        @endauth
-                        @endif
+                        <?php endif; ?>
+                        <?php endif; ?>
                     </div>
                 </li>
             </ul>
@@ -128,20 +129,19 @@
 <div class="collapse" id="categorias-collapse" data-bs-parent="#navPrincipal">
     <div class="mx-auto row p-5 pt-0 align-items-center">
         <hr>
-        @foreach ($categorias as $categoria)
+        <?php $__currentLoopData = $categorias; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $categoria): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="col-2 p-2 fs-5">
-            <a href="{{ route('category.show', $categoria->slug) }}" class="text-decoration-none categorias">{{
-                $categoria->name }}</a>
+            <a href="<?php echo e(route('category.show', $categoria->slug)); ?>" class="text-decoration-none categorias"><?php echo e($categoria->name); ?></a>
         </div>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
 </div>
 
-{{-- Menu Para moviles --}}
+
 <nav class="navbar navbar-expand d-flex align-items-center d-lg-none fixed-bottom rounded-pill mb-1 mx-1"
     id="nav-mobile">
-    <div class="nav-item-mobile d-flex align-items-center flex-column {{ Request::is('wishlist') ? 'active' : '' }}">
-        <a href="{{route('wishlist')}}" class="d-flex align-items-center text-decoration-none">
+    <div class="nav-item-mobile d-flex align-items-center flex-column <?php echo e(Request::is('wishlist') ? 'active' : ''); ?>">
+        <a href="<?php echo e(route('wishlist')); ?>" class="d-flex align-items-center text-decoration-none">
             <i class="material-icons favorite-icon">
                 favorite
             </i>
@@ -152,8 +152,8 @@
             search
         </i>
         <div class="search-box">
-            <form action="{{ route('search') }}" method="GET" id="searchForm">
-                @csrf
+            <form action="<?php echo e(route('search')); ?>" method="GET" id="searchForm">
+                <?php echo csrf_field(); ?>
                 <label for="search-mob" class="visually-hidden" style="color:#D9D9D9">Buscar un libro</label>
                 <input type="text" placeholder="Buscar..." class="search-input" name="titulo" id="search-mob">
                 <div class="search-background"></div>
@@ -161,14 +161,14 @@
         </div>
     </div>
     <div class="nav-item-mobile d-flex align-items-center flex-column">
-        <a href="{{route('inicio')}}" class="d-flex align-items-center text-decoration-none">
-            <img src="{{ Storage::url('Logo.svg') }}" alt="Logo El Rincon de las Letras - Ir a la página principal"
+        <a href="<?php echo e(route('inicio')); ?>" class="d-flex align-items-center text-decoration-none">
+            <img src="<?php echo e(Storage::url('Logo.svg')); ?>" alt="Logo El Rincon de las Letras - Ir a la página principal"
                 id='logo' width="36" height="36">
         </a>
     </div>
     <div
-        class="nav-item-mobile d-flex align-items-center flex-column {{ Request::is('cart/cart-show') ? 'active' : '' }}">
-        <a href="{{ route('cart') }}" class="d-flex align-items-center text-decoration-none">
+        class="nav-item-mobile d-flex align-items-center flex-column <?php echo e(Request::is('cart/cart-show') ? 'active' : ''); ?>">
+        <a href="<?php echo e(route('cart')); ?>" class="d-flex align-items-center text-decoration-none">
             <i class="material-icons shopping_cart">
                 shopping_cart
             </i>
@@ -183,8 +183,36 @@
 </nav>
 
 
-<x-offcanvas-mobile :categorias="$categorias" /> <!-- Offcanvas para moviles -->
-@livewire('cart.cart-show-inicio')
+<?php if (isset($component)) { $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4 = $component; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.offcanvas-mobile','data' => ['categorias' => $categorias]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('offcanvas-mobile'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['categorias' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($categorias)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4)): ?>
+<?php $component = $__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4; ?>
+<?php unset($__componentOriginalc254754b9d5db91d5165876f9d051922ca0066f4); ?>
+<?php endif; ?> <!-- Offcanvas para moviles -->
+<?php
+if (! isset($_instance)) {
+    $html = \Livewire\Livewire::mount('cart.cart-show-inicio')->html();
+} elseif ($_instance->childHasBeenRendered('l3114914878-0')) {
+    $componentId = $_instance->getRenderedChildComponentId('l3114914878-0');
+    $componentTag = $_instance->getRenderedChildComponentTagName('l3114914878-0');
+    $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
+    $_instance->preserveRenderedChild('l3114914878-0');
+} else {
+    $response = \Livewire\Livewire::mount('cart.cart-show-inicio');
+    $html = $response->html();
+    $_instance->logRenderedChild('l3114914878-0', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+}
+echo $html;
+?>
 
 <script>
     function showSearch() {
@@ -388,3 +416,4 @@
         color: #D9D9D9;
     }
 </style>
+<?php /**PATH /home/fran/Escritorio/AWS/Aws/resources/views/livewire/navbar.blade.php ENDPATH**/ ?>

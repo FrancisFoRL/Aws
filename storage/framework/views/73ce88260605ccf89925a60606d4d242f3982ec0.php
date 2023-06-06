@@ -1,13 +1,13 @@
 <div class="list-group sticky-top">
-    <a href="{{route('profile.show')}}"
-        class="list-group-item list-group-item-action fs-5 {{ Request::is('user/profile') ? 'active' : '' }}"
+    <a href="<?php echo e(route('profile.show')); ?>"
+        class="list-group-item list-group-item-action fs-5 <?php echo e(Request::is('user/profile') ? 'active' : ''); ?>"
         aria-current="true">
         Perfil
     </a>
-    <a href="{{route('pedidos')}}"
-        class="list-group-item list-group-item-action fs-5 {{ Request::is('perfil/pedidos') ? 'active' : '' }}">Mis
+    <a href="<?php echo e(route('pedidos')); ?>"
+        class="list-group-item list-group-item-action fs-5 <?php echo e(Request::is('perfil/pedidos') ? 'active' : ''); ?>">Mis
         pedidos</a>
-    <a href="{{route('opiniones')}}" class="list-group-item list-group-item-action fs-5 {{ Request::is('perfil/reseñas') ? 'active' : '' }}">Mis Opiniones</a>
+    <a href="<?php echo e(route('opiniones')); ?>" class="list-group-item list-group-item-action fs-5 <?php echo e(Request::is('perfil/reseñas') ? 'active' : ''); ?>">Mis Opiniones</a>
 </div>
 <style>
     .list-group {
@@ -31,3 +31,4 @@
         border: none;
     }
 </style>
+<?php /**PATH /home/fran/Escritorio/AWS/Aws/resources/views/components/nav-perfil.blade.php ENDPATH**/ ?>
